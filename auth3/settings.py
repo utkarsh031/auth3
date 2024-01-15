@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'rest_framework.authtoken',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google'
+    'allauth.socialaccount.providers.google',
+    'udyamhelper',
 ]
 
 SOCIALACCOUNT_PROVIDERS  = {
