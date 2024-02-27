@@ -79,7 +79,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         hashed_password = hashlib.sha256(str(password).encode()).hexdigest()
         self.password=hashed_password
         self.save()
-    def verify_password(self,input_password):
+    def check_password(self,input_password):
         if not self.password:
             return False
         input_password_str=str(input_password)
