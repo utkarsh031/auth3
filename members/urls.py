@@ -12,7 +12,6 @@ from members.views import (
 	UserUpdateAPI,
 	ChangePassword,
 	UserQueriesAPI,
-    RedirectSocial,
 )
 
 
@@ -28,8 +27,5 @@ urlpatterns = [
 	path('user/change-password', ChangePassword.as_view(), name="change-password"),
 	path('user/update', UserUpdateAPI.as_view(), name="User Update"),
 	path('user/queries',UserQueriesAPI.as_view(), name='User Query'),
-    path('user/auth/', include('djoser.urls.jwt')),
-    path('user/auth/social/', include('djoser.social.urls')),
-    path('statecode/', RedirectSocial.as_view(), name='state-code'),
 ]
 
