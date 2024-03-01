@@ -74,20 +74,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-    
-    def set_and_hash_password(self,password):
-        hashed_password = hashlib.sha256(str(password).encode()).hexdigest()
-        self.password=hashed_password
-        self.save()
-    def check_password(self,input_password):
-        if not self.password:
-            return False
-        input_password_str=str(input_password)
-        hashed_input_password=hashlib.sha256(input_password_str.encode()).hexdigest()
-        
-        return self.password==hashed_input_password
-        
-                    
 
 
 class BroadCast_Email(models.Model):
