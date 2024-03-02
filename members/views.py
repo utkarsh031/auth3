@@ -17,6 +17,7 @@ import uuid
 from django.core.exceptions import ObjectDoesNotExist
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from django.contrib.auth import authenticate
 
 
 class UserRegistrationAPIView(APIView):

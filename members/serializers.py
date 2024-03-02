@@ -5,17 +5,35 @@ from .models import *
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
+    password_confirmation = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+
     class Meta:
         model = User
         fields = ['email', 'name', 'college', 'year', 'password', 'password_confirmation']
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
+
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password_confirmation']:
+            raise serializers.ValidationError({"password": "Password fields didn't match."})
+        return attrs
 
     def create(self, validated_data):
-        user_password = validated_data.get('password', None)
-        db_instance = self.Meta.model(email=validated_data.get('email'), name=validated_data.get('name'),
-                                       college=validated_data.get('college'), year=validated_data.get('year'))
-        db_instance.set_password(user_password)
-        db_instance.save()
-        return db_instance
+        # Remove the password_confirmation from the validated data since it's not needed for user creation
+        validated_data.pop('password_confirmation', None)
+
+        # Create the user instance
+        user = User(
+            email=validated_data['email'],
+            name=validated_data['name'],
+            college=validated_data['college'],
+            year=validated_data['year']
+        )
+
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
 
 
 class UserLoginSerializer(serializers.Serializer):
